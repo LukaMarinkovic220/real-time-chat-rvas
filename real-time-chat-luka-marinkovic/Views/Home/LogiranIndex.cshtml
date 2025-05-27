@@ -1,0 +1,17 @@
+﻿@model List<ApplicationUser>
+@{
+    ViewData["Title"] = "Korisnici";
+}
+
+<h2>Dobrodošli, @User.Identity.Name!</h2>
+
+<h3>Dostupni korisnici za chat:</h3>
+<ul>
+    @foreach (var user in Model)
+    {
+        <li>
+            @user.UserName
+            [<a href="/Chat/Start?userId=@user.Id">Započni chat</a>]
+        </li>
+    }
+</ul>

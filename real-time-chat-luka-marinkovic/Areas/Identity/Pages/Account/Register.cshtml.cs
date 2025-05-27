@@ -76,6 +76,8 @@ namespace real_time_chat_luka_marinkovic.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            public string? DisplayName { get; set; }
+            
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -116,6 +118,7 @@ namespace real_time_chat_luka_marinkovic.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
+                user.DisplayName = Input.DisplayName;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);

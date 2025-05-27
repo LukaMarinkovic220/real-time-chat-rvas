@@ -16,9 +16,19 @@ namespace real_time_chat_luka_marinkovic.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var trenutni_korisnik = await _userManager.GetUserAsync(User);
+
+            // ako korisnik nije ulogovan
+            if (trenutni_korisnik == null)
+            {
+                return View();
+            }
+
+            // ako korisnik jeste ulogovan
+            var korisnici = _userManager.Users.Where(k => k.Id != trenutni_korisnik.Id).ToList();
+            return View("LogiranIndex", korisnici);
         }
 
         public IActionResult Privacy()
