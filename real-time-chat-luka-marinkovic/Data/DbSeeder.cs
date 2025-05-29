@@ -30,6 +30,17 @@ namespace real_time_chat_luka_marinkovic.Data
                 };
                 await userManager.CreateAsync(user2, "User1!");
             }
+
+            if (await userManager.FindByEmailAsync("luka@luka.com") == null)
+            {
+                var user3 = new ApplicationUser
+                {
+                    DisplayName = "luka",
+                    UserName = "luka@luka.com",
+                    Email = "luka@luka.com",
+                };
+                await userManager.CreateAsync(user3, "Luka1!");
+            }
         }
     }
 }
