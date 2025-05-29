@@ -14,7 +14,12 @@ public class ChatHub : Hub
         _userManager = userManager;
     }
 
-    public async Task SendMessage(string senderId, string receiverId, string message)
+    public async Task JoinChat(string chatGroupName)
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, chatGroupName);
+    }
+
+    public async Task SendMessage(string senderId, string receiverId, string message, string chatGroupName)
     {
         var msg = new Message
         {
@@ -27,8 +32,7 @@ public class ChatHub : Hub
         _context.Messages.Add(msg);
         await _context.SaveChangesAsync();
 
-        await Clients.User(receiverId).SendAsync("ReceiveMessage", senderId, message);
-        await Clients.User(senderId).SendAsync("ReceiveMessage", senderId, message);
+        await Clients.Group(chatGroupName).SendAsync("ReceiveMessage", senderId, message);
     }
 
     public override Task OnConnectedAsync()
