@@ -4,20 +4,26 @@
     var drugiKorisnik = ViewBag.drugiKorisnik;
     ViewData["Title"] = "Chat";
 }
+<div class="container d-flex flex-column">
+    <h2>Razgovor sa korisnikom: @ViewBag.drugiKorisnik.DisplayName</h2>
 
-<h2>Razgovor sa korisnikom: @ViewBag.drugiKorisnik.DisplayName</h2>
+    <div class="d-flex flex-column justify-content-center">
 
-<div id="messages">
-    @foreach (var msg in Model)
-    {
-        <div class="message">
-            <strong>@(msg.SenderId == ViewBag.trenutniKorisnikId ? "Ti" : ViewBag.drugiKorisnik.DisplayName):</strong> @msg.Content
+        <div id="messages" class="mb-3">
+            @foreach (var msg in Model)
+            {
+                <div class="message">
+                    <strong>@(msg.SenderId == ViewBag.trenutniKorisnikId ? "Ti" : ViewBag.drugiKorisnik.DisplayName):</strong> @msg.Content
+                </div>
+            }
         </div>
-    }
-</div>
 
-<input type="text" id="messageInput" placeholder="Unesite poruku" />
-<button id="sendBtn">Pošalji</button>
+        <div class="d-flex flex-column gap-2">
+            <input type="text" id="messageInput" placeholder="Unesite poruku"/>
+            <button id="sendBtn" class="btn btn-primary">Posalji</button>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>

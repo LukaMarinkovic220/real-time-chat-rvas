@@ -3,22 +3,22 @@
     ViewData["Title"] = "Korisnici";
 }
 
-<h2>Dobrodošli, @User.Identity.Name!</h2>
+<div class="container d-flex justify-content-center text-center flex-column">
+    <h2>Dobrodošli, @User.Identity.Name!</h2>
 
-@if (TempData["poruka"] != null)
-{
-    <div class="alert alert-warning">
-        @TempData["poruka"]
-    </div>
-}
-
-<h3>Dostupni korisnici za chat:</h3>
-<ul>
-    @foreach (var user in Model)
+    @if (TempData["poruka"] != null)
     {
-        <li>
-            @user.UserName
-            [<a href="/Chat/Start?userId=@user.Id">Započni chat</a>]
-        </li>
+        <div class="alert alert-warning">
+            @TempData["poruka"]
+        </div>
     }
-</ul>
+
+    <h3>Korisnici za chat</h3>
+
+    <div class="list-group">
+        @foreach (var user in Model)
+        {
+            <a href="/Chat/Start?userId=@user.Id" class="list-group-item list-group-item-action">@user.DisplayName</a>
+        }
+    </div>
+</div>
