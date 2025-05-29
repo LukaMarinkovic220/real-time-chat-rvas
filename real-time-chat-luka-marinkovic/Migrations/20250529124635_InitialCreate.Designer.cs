@@ -12,7 +12,7 @@ using real_time_chat_luka_marinkovic.Data;
 namespace real_time_chat_luka_marinkovic.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250527201226_InitialCreate")]
+    [Migration("20250529124635_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
