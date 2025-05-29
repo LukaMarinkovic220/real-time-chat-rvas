@@ -5,6 +5,13 @@
 
 <h2>Dobrodošli, @User.Identity.Name!</h2>
 
+@if (TempData["poruka"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["poruka"]
+    </div>
+}
+
 <h3>Dostupni korisnici za chat:</h3>
 <ul>
     @foreach (var user in Model)

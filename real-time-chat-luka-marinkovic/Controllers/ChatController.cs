@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.AspNetCore.SignalR;
@@ -8,6 +9,7 @@ using real_time_chat_luka_marinkovic.Models;
 
 namespace real_time_chat_luka_marinkovic.Controllers
 {
+    [Authorize]
     public class ChatController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,8 +27,12 @@ namespace real_time_chat_luka_marinkovic.Controllers
         {
             var trenutniKorisnik = await _userManager.GetUserAsync(User);
             var drugiKorisnik = await _userManager.FindByIdAsync(userId);
-
-            Console.WriteLine("Poziva se funkcija 'Start' iz ChatController.");
+ 
+            // razgovor sa samim sobom
+            if (trenutniKorisnik == drugiKorisnik) {
+                TempData["poruka"] = "Nije moguće razgovarati sa samim sobom.";
+                return RedirectToAction("Index", "Home");
+            }
 
             var messages = _context.Messages
                 .Where(m => (m.SenderId == trenutniKorisnik.Id && m.ReceiverId == userId) ||
